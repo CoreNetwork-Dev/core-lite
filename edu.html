@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core; Lite</title>
+<body>
+<select id="cdn">
+  <option value="jsdelivr">jsdelivr</option>
+  <option value="statically">statically</option>
+</select>
+</body>
+<script>
+function setBase(defaultBase = "jsdelivr") {
+  const bases = {
+    jsdelivr: "https://cdn.jsdelivr.net/",
+    statically: "https://cdn.statically.io/"
+  };
+  document.querySelectorAll("base").forEach(b => b.remove());
+  const base = document.createElement("base");
+  base.href = bases[defaultBase] || bases.jsdelivr;
+  document.head.appendChild(base);
+  localStorage.setItem("cdnBase", defaultBase);
+}
+const saved = localStorage.getItem("cdnBase") || "jsdelivr";
+document.getElementById("cdn").value = saved;
+document.getElementById("cdn").addEventListener("change", e => {
+  setBase(e.target.value);
+});
+setBase(saved);
+</script>
+
+</html>
